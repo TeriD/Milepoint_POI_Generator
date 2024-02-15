@@ -33,18 +33,18 @@ import zipfile
 import smtplib
 
 # Define variables
-sdeCNXN = "D:\GIS_Update_Process\SDE_Connections\PRD-01A\PRD-01A-KYTCVectorLoader_HIS@OSA.sde"
+sdeCNXN = "path to SDE"
 roadsFC = sdeCNXN + "\\KYALLRDS_M"
 nodesFC = sdeCNXN + "\\NODES"
 crossoverFC = sdeCNXN + "\\CROSSOVERS"
 turnTABLE = sdeCNXN + "\\TURNAROUND_POI"
-outLOC = "D:\GIS_Update_Process\KYTCVectorLoader_HIS\Data\Milepoint_POIs"
+outLOC = "<path to putput dataset"
 
 # ================================================================================================================
 # Instantiate the ODBC connection to KYTCVectorLoader_HIS geodatabase and define connection cursor
 # ---------------------------------------------------------------------------------------------------------------
 conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; '
-                      'SERVER=KTC1PP-SNGI001A; '
+                      'servername; '
                       'DATABASE=master; '
                       'Trusted_Connection=yes')
 cur = conn.cursor()
@@ -60,13 +60,13 @@ def sendEmail(eSubject, eMessage):
     from email.message import EmailMessage
     # Generate email message
     msg = EmailMessage()
-    msg['From'] = "noreply@ky.gov"
-    msg['To'] = "teri.dowdy@ky.gov,emily.bartee@ky.gov"
-    msg['CC'] = "rachael.howard@ky.gov"
+    msg['From'] = "noreply email address"
+    msg['To'] = "SDE Admins"
+    msg['CC'] = "other interested parties"
     msg['Subject'] = eSubject
     msg.set_content(eMessage)
     # Send email message via SMTP server
-    smtpServer = smtplib.SMTP('SMTP.ky.gov', 25)
+    smtpServer = smtplib.SMTP('SMTP.address', 25)
     smtpServer.send_message(msg)
     smtpServer.quit()
 
